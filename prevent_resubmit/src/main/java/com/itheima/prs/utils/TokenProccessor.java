@@ -1,8 +1,18 @@
 package com.itheima.prs.utils;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.components.Token;
+import org.apache.struts2.util.TokenHelper;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import sun.misc.BASE64Encoder;
 
@@ -45,5 +55,29 @@ public class TokenProccessor {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public String getToken() {
+        /*String salt="("+request.getParameter("username")+")";    
+        String md5Pwd=new Md5Hash(request.getParameter("password"),salt).toString();*/
+        //String token=new Md5Hash(UUID.randomUUID().toString()).toString().toUpperCase();
+        
+        //String token = (new BigInteger(165, new SecureRandom())).toString(36).toUpperCase();
+        //String token = TokenHelper.generateGUID();
+        
+        //TokenHelper.setToken("struts.token.name");
+        
+        //struts生成token的原理
+        HashMap<String,Object> map = new HashMap<String,Object>();
+        
+        map.put("struts.token.name", new String[] {"token"});
+        
+        ActionContext.getContext().setParameters(map);
+        
+        String token = TokenHelper.setToken(TokenHelper.getTokenName());
+        
+        System.out.println(token);
+        
+        return token;
     }
 }

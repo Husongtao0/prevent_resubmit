@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>form_json.html</title>
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+</head>
+<body>
+	<form action="tokenAction_save.action" method="post">
+
+		<input type="hidden" name="struts.token.name" value="token" />
+		<input id="token" type="hidden" name="token" />
+		<script type="text/javascript">
+			$(function() {
+				$.post("tokenAction_token.action", function(token) {
+					$("#token").val(token)
+				})
+			})
+		</script>
+
+		用户名
+		<input type="text" name="username">
+		<!-- <font color="red">${error }</font> -->
+		<br />
+		<input type="submit" value="注册">
+
+	</form>
+</body>
+</html>

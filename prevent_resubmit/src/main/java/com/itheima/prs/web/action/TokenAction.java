@@ -1,5 +1,7 @@
 package com.itheima.prs.web.action;
 
+import java.io.IOException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -8,6 +10,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.itheima.prs.utils.TokenProccessor;
 import com.itheima.prs.utils.domain.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -56,5 +59,12 @@ public class TokenAction extends ActionSupport implements ModelDriven<User> {
 
         System.out.println("向数据库中保存数据：" + model.getUsername().trim());
         return SUCCESS;
+    }
+    
+    //AJAX生成token
+    @Action("tokenAction_token")
+    public String token() throws IOException {
+        ServletActionContext.getResponse().getWriter().write(TokenProccessor.getInstance().getToken());
+        return NONE;
     }
 }
